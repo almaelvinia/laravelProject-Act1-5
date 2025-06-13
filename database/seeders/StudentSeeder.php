@@ -7,6 +7,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+// Activity 1
+
 class StudentSeeder extends Seeder
 {
     /**
