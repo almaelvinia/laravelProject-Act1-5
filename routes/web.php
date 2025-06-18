@@ -9,7 +9,12 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-// Auth
+    // Auth
+    Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/check', [AuthController::class, 'check'])->name('auth.check');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    
+    Route::middleware(['auth'])->group(function () {
 
     // View
     Route::get('/students', [StudentController::class, 'myView'])->name('std.myView');
@@ -22,4 +27,4 @@ Route::get('/', function () {
     Route::get('/delete/{id}', [StudentController::class, 'deleteME'])->name('std.studentDelete');
     
     
-    
+    });
