@@ -11,9 +11,9 @@
     <p style="color: green">{{ session('success') }}</p>
 @endif
 
-<table border="1" cellpadding="10">
+<table border="2" cellpadding="10">
     <tr>
-        <th>ID</th><th>Name</th><th>Age</th><th>Gender</th>
+        <th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Actions</th>
     </tr>
     @foreach ($students as $student)
     <tr>
@@ -21,6 +21,11 @@
         <td>{{ $student->name }}</td>
         <td>{{ $student->age }}</td>
         <td>{{ $student->gender }}</td>
+    <td>
+        <a href="{{ route('std.updateView', $student->id) }}">Edit</a> |
+        <a href="{{ route('std.studentDelete', $student->id) }}" onclick="return confirm('Are you sure?')">Delete</a>
+    </td>
+
     </tr>
     @endforeach
 </table>

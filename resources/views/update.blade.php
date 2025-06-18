@@ -1,44 +1,31 @@
-@extends('base')
-@section('title', 'Update Page')
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Student</title>
+</head>
+<body>
 
-<div class="container h-100 pt-5">
-    <div class="row justify-content-sm-center h-100">
-        <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
-            <div class="card shadow-lg mb-5">
-                <div class="card-body p-6">
-                    @foreach($students as $std)
-                    <form method="post" action="{{ route('std.studentUpdate') }}">
-                        @csrf
-                        <div class="mb-3 d-none">
-                            <label for="id" class="form-label">ID</label>
-                            <input type="text" class="form-control" id="id" name="id" value="{{ $std->id }}" readonly>
-                        </div>
+<h2>Update Student</h2>
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ $std->name }}" placeholder="Enter name">
-                        </div>
+<form method="POST" action="/update">
+    @csrf
+    @foreach ($students as $student)
+        <input type="hidden" name="id" value="{{ $student->id }}">
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ $student->name }}" required><br>
 
-                        <div class="mb-3">
-                            <label for="age" class="form-label">Age</label>
-                            <input type="text" class="form-control" id="age" name="age" value="{{ $std->age }}" placeholder="Enter age">
-                        </div>
-                        <div class="mb-3">
-                            <label for="gender" class="form-label">Gender</label>
-                            <input type="text" class="form-control" id="gender" name="gender" value="{{ $std->gender }}" placeholder="Enter gender">
-                        </div>
+        <label>Age:</label>
+        <input type="number" name="age" value="{{ $student->age }}" required><br>
 
-                        <div class="col mt-3">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
-                    @endforeach
-                    <hr>
+        <label>Gender:</label>
+        <select name="gender" required>
+            <option {{ $student->gender == 'Male' ? 'selected' : '' }}>Male</option>
+            <option {{ $student->gender == 'Female' ? 'selected' : '' }}>Female</option>
+        </select><br><br>
 
-                    <div class="text-center">
-                        <a class="small" href="{{ route('std.myView') }}">Back to Home</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <button type="submit">Update</button>
+    @endforeach
+</form>
+
+</body>
+</html>
