@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+
+    
      public function myView()
     {
         $students = Student::all();
@@ -15,6 +17,7 @@ class StudentController extends Controller
 
         return view('students.index', compact('students', 'users'));
     }
+
 
     // CREATE
     public function addNewStudent(Request $request)
@@ -40,8 +43,8 @@ class StudentController extends Controller
     // UPDATE
     public function updateView($id)
     {
-        $students = Student::where('id', '=', $id)->get();
-        return view('update', compact('students'));
+    $student = Student::findOrFail($id);
+    return view('update', compact('student'));
     }
 
 

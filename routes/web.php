@@ -1,30 +1,20 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\StudentController;
-use App\Http\Middleware\AuthCheck;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/login');
+    return view('welcome');
 });
 
-    // Auth
-    Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
-    Route::post('/check', [AuthController::class, 'check'])->name('auth.check');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
-    
-    Route::middleware(['auth'])->group(function () {
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-    // View
-    Route::get('/students', [StudentController::class, 'myView'])->name('std.myView');
-    // Create
-    Route::post('/add-new', [StudentController::class, 'addNewStudent'])->name('std.addNewStudent');
-    // PUT
-    Route::get('/student/update/{id}', [StudentController::class, 'updateView'])->name('std.updateView');
-    Route::post('/update', [StudentController::class, 'updateME'])->name('std.studentUpdate');
-    // DELETE
-    Route::get('/delete/{id}', [StudentController::class, 'deleteME'])->name('std.studentDelete');
-    
-    
-    });
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
